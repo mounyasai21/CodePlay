@@ -159,6 +159,7 @@ Project: *CodePlay - School Level Coding Game*
 
 <img width="1844" height="918" alt="Image" src="https://github.com/user-attachments/assets/1501069f-d1c6-40c6-8bbb-1236b96b769d" />
 
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/673c9e64-d494-46a7-9b58-a2a79e29bdb9" />
 
 <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/1f5dcbb2-0bc5-4079-8d12-14f98b446c32" />
 
@@ -167,6 +168,5 @@ Project: *CodePlay - School Level Coding Game*
 
 ## Video
 
-<!-- Failed to upload "vsdc-sr 2025-08-01 16-45-52.mp4" -->
-
+https://github.com/user-attachments/assets/e9ead15c-5c00-4376-83c5-f8cd3c7b7215
 
