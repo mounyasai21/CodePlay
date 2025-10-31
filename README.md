@@ -139,7 +139,34 @@ Project: *CodePlay - School Level Coding Game*
 
 ## Ouput Screens
 
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/de42252f-67f3-4e04-9f0c-e6a06a29acb0" />
+
+<img width="1881" height="996" alt="Image" src="https://github.com/user-attachments/assets/aead1ce4-e8f5-4e11-8d90-021d142bf58a" />
+
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/a0e60ebe-eafe-4454-8c5b-167ec0ef08c4" />
+
+<img width="1905" height="988" alt="Image" src="https://github.com/user-attachments/assets/f896e93f-f03c-4244-a4a2-9cb5bd476efa" />
+
+<img width="1919" height="968" alt="Image" src="https://github.com/user-attachments/assets/be140b9b-9a6c-4281-bfa7-db14401746c4" />
+
+<img width="1855" height="941" alt="Image" src="https://github.com/user-attachments/assets/8be9763b-0b57-48fc-b903-da2afb9e6327" />
+
+<img width="1919" height="984" alt="Image" src="https://github.com/user-attachments/assets/f1f90553-6a45-4a31-9bb7-4db96e143c73" />
+
+<img width="1852" height="681" alt="Image" src="https://github.com/user-attachments/assets/f56fae3f-c4e4-4402-b0ce-9ce8d6da0b83" />
+
+<img width="1843" height="868" alt="Image" src="https://github.com/user-attachments/assets/9c9e529d-1266-43a4-99d4-91d0af479a25" />
+
+<img width="1844" height="918" alt="Image" src="https://github.com/user-attachments/assets/1501069f-d1c6-40c6-8bbb-1236b96b769d" />
+
+
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/1f5dcbb2-0bc5-4079-8d12-14f98b446c32" />
+
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/1664e50e-9eb0-4c26-be8f-3975a3078a1d" />
 
 
 ## Video
+
+<!-- Failed to upload "vsdc-sr 2025-08-01 16-45-52.mp4" -->
+
 
