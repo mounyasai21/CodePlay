@@ -1,37 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from flask_sqlalchemy import SQLAlchemy
+from models.models import db, User, Score
+from config import Config
 from datetime import datetime
 
 app = Flask(__name__)
-app.config.from_object('config.Config')
+app.config.from_object(Config)
+db.init_app(app)
 
-db = SQLAlchemy(app)
-
-# ---------------- DATABASE MODELS ---------------- #
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False)
-    email = db.Column(db.String(120), nullable=False)
-    role = db.Column(db.String(20), nullable=False)  # kid or parent
-    screen_time = db.Column(db.Integer, default=60)
-    last_login = db.Column(db.DateTime, default=datetime.utcnow)
-
-class Score(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80))
-    level = db.Column(db.String(10))
-    points = db.Column(db.Integer)
-    date_played = db.Column(db.DateTime, default=datetime.utcnow)
-
+# Create all tables once
 with app.app_context():
     db.create_all()
 
-# ---------------- ROUTES ---------------- #
+# ---------------- HOME ---------------- #
 @app.route('/')
 def home():
     return render_template('index.html')
 
+# ---------------- SIGNUP ---------------- #
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -39,71 +24,88 @@ def signup():
         password = request.form['password']
         email = request.form['email']
         role = request.form['role']
+        parent_username = request.form.get('parent_username', None)
 
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
             flash("Username already exists!")
             return redirect(url_for('signup'))
 
-        user = User(username=username, password=password, email=email, role=role)
-        db.session.add(user)
+        new_user = User(username=username, email=email, password=password, role=role, parent_username=parent_username)
+        db.session.add(new_user)
         db.session.commit()
         flash("Account created successfully! Please login.")
         return redirect(url_for('login'))
     return render_template('signup.html')
 
+# ---------------- LOGIN ---------------- #
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(username=username, password=password).first()
 
-        if user:
-            session['username'] = user.username
-            session['role'] = user.role
-            user.last_login = datetime.utcnow()
-            db.session.commit()
-            if user.role == 'parent':
-                return redirect(url_for('parent_dashboard'))
-            else:
-                return redirect(url_for('dashboard'))
+        user = User.query.filter_by(username=username, password=password).first()
+        if not user:
+            flash("Invalid username or password!")
+            return redirect(url_for('login'))
+
+        session['username'] = user.username
+        session['role'] = user.role
+        user.last_login = datetime.utcnow()
+        db.session.commit()
+
+        if user.role == 'parent':
+            return redirect(url_for('parent_dashboard'))
         else:
-            flash("Invalid credentials!")
+            return redirect(url_for('dashboard'))
+
     return render_template('login.html')
 
+# ---------------- LOGOUT ---------------- #
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('home'))
 
+# ---------------- KID DASHBOARD ---------------- #
 @app.route('/dashboard')
 def dashboard():
     if 'username' not in session:
         return redirect(url_for('login'))
-    return render_template('dashboard.html', username=session['username'])
+    username = session['username']
+    scores = Score.query.filter_by(username=username).all()
+    return render_template('dashboard.html', username=username, scores=scores)
 
+# ---------------- PARENT DASHBOARD ---------------- #
 @app.route('/parent_dashboard')
 def parent_dashboard():
-    if 'username' not in session:
+    if 'username' not in session' or session['role'] != 'parent':
         return redirect(url_for('login'))
-    users = User.query.filter_by(role='kid').all()
-    scores = Score.query.all()
-    return render_template('parent_dashboard.html', users=users, scores=scores)
 
+    parent = session['username']
+    kids = User.query.filter_by(parent_username=parent, role='kid').all()
+    scores = Score.query.all()
+    return render_template('parent_dashboard.html', kids=kids, scores=scores)
+
+# ---------------- LEVELS ---------------- #
 @app.route('/level<int:level_id>', methods=['GET', 'POST'])
 def level(level_id):
     if 'username' not in session:
         return redirect(url_for('login'))
+
+    username = session['username']
     if request.method == 'POST':
-        points = int(request.form['score'])
-        new_score = Score(username=session['username'], level=str(level_id), points=points)
+        score_value = int(request.form['score'])
+        new_score = Score(username=username, level=f"Level {level_id}", points=score_value)
         db.session.add(new_score)
         db.session.commit()
         flash(f"Level {level_id} completed! Score saved.")
         return redirect(url_for('dashboard'))
-    return render_template(f'level{level_id}.html', level=level_id)
 
+    return render_template(f'level{level_id}.html', level_id=level_id)
+
+# ---------------- ABOUT ---------------- #
 @app.route('/about')
 def about():
     return render_template('about.html')
