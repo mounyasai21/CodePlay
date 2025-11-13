@@ -165,6 +165,7 @@ Project: *CodePlay - School Level Coding Game*
 
 <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/1664e50e-9eb0-4c26-be8f-3975a3078a1d" />
 
+<img width="599" height="320" alt="Image" src="https://github.com/user-attachments/assets/4b4918e1-876b-474e-b11a-8610895458d9" />
 
 ## Video
 
